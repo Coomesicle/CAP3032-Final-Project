@@ -11,13 +11,16 @@ void setup() {
 
 void draw() {
   game.display();
+  if(audio.isBeat()>.15){
+    print("beat");
+  }
 }
 
 void mousePressed() {
   game.handleClick(mouseX, mouseY);
 }
+
 void keyPressed() {
   if(key=='s'){audio.playSong();}
-  if(key=='z'){audio.pauseSong();}
-  if(key=='x'){audio.restartSong();}
+  if(key=='m'){audio.muteSong();}
 }
