@@ -1,43 +1,39 @@
 import processing.sound.*;
 class Audio {
   
-  private SoundFile song;
+  private SoundFile gameSong;
+  private SoundFile menuSong;
   private BeatDetector beat;
-  private Amplitude amp;
   
   public Audio(PApplet parent) {
-    song = new SoundFile(parent, "assets/music/Exodus.wav");
+    gameSong = new SoundFile(parent, "assets/music/GameSong.wav");
+    menuSong = new SoundFile(parent, "assets/music/MenuSong.wav");
+    menuSong.play();
     beat = new BeatDetector(parent);
-    amp = new Amplitude(parent);
-    amp.input(song);
+    beat.input(gameSong);
   }
   
-  public void playSong(){
-    if(!song.isPlaying()){
-      song.play();
+  public void playGameSong(){
+    if(!gameSong.isPlaying()){
+      gameSong.play();
     }
   }
-  public void pauseSong(){
-    song.pause();
-  }
-  public void restartSong(){
-    song.jump(0);
-    song.stop();
-  }
-  public void muteSong(){
-    if(amp.analyze()==0){
-      song.amp(1);
-    }
-    else{
-      song.amp(0);
+  public void restartMenuSong(){
+    if(!menuSong.isPlaying()){
+      menuSong.play();
     }
   }
   
-  
-  public float isBeat(){
-    beat.isBeat(song);
-    float amplitude = amp.analyze();
-    return amplitude;
+  public void pauseGameSong(){
+    gameSong.pause();
   }
   
+  public void restartGameSong(){
+    gameSong.jump(0);
+    gameSong.stop();
+  }
+  
+  public boolean isBeat(){
+    return beat.isBeat();
+  }
 }

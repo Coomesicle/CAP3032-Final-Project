@@ -11,16 +11,17 @@ void setup() {
 
 void draw() {
   game.display();
-  if(audio.isBeat()>.15){
-    print("beat");
-  }
+  audio.restartMenuSong();
 }
 
 void mousePressed() {
   game.handleClick(mouseX, mouseY);
 }
 
+/* Code to test Audio Methods
 void keyPressed() {
-  if(key=='s'){audio.playSong();}
-  if(key=='m'){audio.muteSong();}
+  if(key=='S' || key=='s'){audio.playGameSong();}
+  if(key=='R' || key=='r'){audio.restartGameSong();}
+  if(key=='P' || key=='p'){audio.pauseGameSong();}
 }
+*/
