@@ -99,10 +99,6 @@ class StartScreen extends Screen {
     textAlign(LEFT);
     textfunc( 40, height / 2, 128, #FF0303 , "RhYthm");
     textfunc( 40, height / 2 + 110, 128, #FF0303 , "Run");
-
-    fill(0, 0, 0, 150);
-    rectMode(CORNER);
-    rect(2 * width / 3, 0, width / 3, height);
     
     // textAlign(CENTER);
     // textfunc( width/4, 3*height/4, 30, #05FF03 , "EASY");
@@ -111,6 +107,10 @@ class StartScreen extends Screen {
     
     //blur
     filter(BLUR, 2); /////////////////////////////
+    
+    fill(0, 0, 0, 150);
+    rectMode(CORNER);
+    rect(2 * width / 3, 0, width / 3, height);
     
     textAlign(LEFT);
     textfunc( 40, height / 2, 128, 255 , "RhYthm");
@@ -129,7 +129,12 @@ class StartScreen extends Screen {
 
   void drawEasyButton(Button btn) {
     rectMode(btn.centered ? CENTER : CORNER);
-    fill(0, 150, 0, 110);
+    
+    if (btn.isOver(mouseX, mouseY))
+      fill(50, 200, 0, 110);
+    else
+      fill(0, 150, 0, 110);
+    
     noStroke();
     rect(btn.x, btn.y, btn.width, btn.height, 40);
     textAlign(CENTER, CENTER);
@@ -138,7 +143,12 @@ class StartScreen extends Screen {
 
   void drawMediumButton(Button btn) {
     rectMode(btn.centered ? CENTER : CORNER);
-    fill(150, 150, 0, 110);
+    
+    if (btn.isOver(mouseX, mouseY))
+      fill(200, 200, 50, 110);
+    else
+      fill(150, 150, 0, 110);
+    
     noStroke();
     rect(btn.x, btn.y, btn.width, btn.height, 40);
     textAlign(CENTER, CENTER);
@@ -147,7 +157,12 @@ class StartScreen extends Screen {
 
   void drawHardButton(Button btn) {
     rectMode(btn.centered ? CENTER : CORNER);
-    fill(150, 0, 0, 110);
+    
+    if (btn.isOver(mouseX, mouseY))
+      fill(200, 50, 50, 110);
+    else
+      fill(150, 0, 0, 110);
+    
     noStroke();
     rect(btn.x, btn.y, btn.width, btn.height, 40);
     textAlign(CENTER, CENTER);
@@ -169,11 +184,53 @@ class GameScreen extends Screen {
 class EndScreen extends Screen {
   public EndScreen(Game game, PImage backgrnd) {
     super(game, backgrnd);
+    
+    buttons.add(new Button(
+      width / 2,
+      3 * height / 4,
+      300,
+      60,
+      true,
+      () -> {game.returnToStart();},
+      () -> {}
+    ));
+    
+    buttons.get(buttons.size() - 1).display = () -> {
+      drawReturnButton(buttons.get(0));
+    };
   }
 
   @Override
   public void display() {
+    super.display();
+    // Score Text
+    PFont gaj;
+    gaj = createFont("GajrajOne-Regular.ttf", 128);
+    textFont(gaj);
+    textAlign(CENTER);
     
+    textfunc(width / 2, 100, 80, #FFFFFF, "Final Score");
+    textfunc(width / 2, height / 3, 160, #FFFFFF, game.score.toString());
+    
+    // TODO: Add Leaderboard
+    
+    
+    for (Button button : buttons)
+      button.display.run();
+  }
+  
+  void drawReturnButton(Button btn) {
+    rectMode(btn.centered ? CENTER : CORNER);
+    
+    if (btn.isOver(mouseX, mouseY))
+      fill(200, 200, 200, 110);
+    else
+      fill(150, 150, 150, 110);
+    
+    noStroke();
+    rect(btn.x, btn.y, btn.width, btn.height, 40);
+    textAlign(CENTER, CENTER);
+    textfunc(btn.x, btn.y - 5, 30, #FFFFFF , "Return to Menu");
   }
 }
 

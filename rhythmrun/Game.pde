@@ -1,6 +1,6 @@
 class Game {
   Integer score = 0;
-  Integer difficulty = 0;
+  Integer difficulty = 2;
   PImage backgrnd;
   SoundFile song;
   BeatDetector detector;
@@ -16,6 +16,7 @@ class Game {
     gameScreen = new GameScreen(this, backgrnd);
     endScreen = new EndScreen(this, backgrnd);
     activeScreen = startScreen;
+    // activeScreen = endScreen;
   }
   
   public void display() {
@@ -32,10 +33,15 @@ class Game {
     activeScreen = gameScreen;
   }
 
-  void resetGame() {}  
+  void resetGame() {
+    score = 0;
+    difficulty = 2;
+  }
+  
   void endGame() {}
   
-  void testButton() {
-    println("Click!");  
+  void returnToStart() {
+    activeScreen = startScreen;
+    resetGame();
   }
 }
