@@ -1,4 +1,5 @@
 class Game {
+  Boolean gameOccuring = false;
   Integer score = 0;
   Integer difficulty = 0;
   PImage backgrnd;
@@ -26,14 +27,19 @@ class Game {
     activeScreen.handleClick(x, y);
   }
   
+  public boolean inGame(){return gameOccuring;}
+  
   void startGame(Integer difficulty) {
+    gameOccuring = true;
     println("Starting game! " + difficulty);
     this.difficulty = difficulty;
     activeScreen = gameScreen;
   }
 
   void resetGame() {}  
-  void endGame() {}
+  void endGame() {
+    gameOccuring = false;
+  }
   
   void testButton() {
     println("Click!");  
