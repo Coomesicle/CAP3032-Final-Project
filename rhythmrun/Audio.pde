@@ -24,6 +24,10 @@ class Audio {
     }
   }
   
+  public void stopMenuSong() {
+    menuSong.stop();
+  }
+  
   public void pauseGameSong(){
     gameSong.pause();
   }
