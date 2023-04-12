@@ -182,12 +182,16 @@ class GameScreen extends Screen {
 }
 
 class EndScreen extends Screen {
+  ArrayList<LeaderboardScore> scores;
+  
   public EndScreen(Game game, PImage backgrnd) {
     super(game, backgrnd);
+    scores = new ArrayList<>();
+    createTestScores();
     
     buttons.add(new Button(
       width / 2,
-      3 * height / 4,
+      9 * height / 10,
       300,
       60,
       true,
@@ -210,13 +214,37 @@ class EndScreen extends Screen {
     textAlign(CENTER);
     
     textfunc(width / 2, 100, 80, #FFFFFF, "Final Score");
-    textfunc(width / 2, height / 3, 160, #FFFFFF, game.score.toString());
+    textfunc(width / 2, 220, 130, #FFFFFF, game.score.toString());
     
     // TODO: Add Leaderboard
-    
+    // Position
+    // Score
+    // Date/Time
+    drawLeaderboard();
     
     for (Button button : buttons)
       button.display.run();
+  }
+  
+  void drawLeaderboard() {
+    fill(0, 0, 0, 150);
+    rectMode(CORNER);
+    rect(80, 250, width - 2 * 80, 340, 40);
+    
+    textAlign(LEFT);
+    textfunc(100, 300, 30, #FFFFFF, "Rank");
+    textfunc(250, 300, 30, #FFFFFF, "Score");
+    textfunc(500, 300, 30, #FFFFFF, "Date/Time");
+    rectMode(CORNER);
+    fill(#FFFFFF);
+    rect(100, 310, width - 200, 2);
+    
+    for (int i = 0; i < scores.size(); i++) {
+      Integer yPos = 350 + i * 50;
+      textfunc(100, yPos, 30, #FFFFFF, scores.get(i).rank.toString());
+      textfunc(250, yPos, 30, #FFFFFF, scores.get(i).score.toString());
+      textfunc(500, yPos, 30, #FFFFFF, scores.get(i).dateTime);
+    }
   }
   
   void drawReturnButton(Button btn) {
@@ -231,6 +259,14 @@ class EndScreen extends Screen {
     rect(btn.x, btn.y, btn.width, btn.height, 40);
     textAlign(CENTER, CENTER);
     textfunc(btn.x, btn.y - 5, 30, #FFFFFF , "Return to Menu");
+  }
+  
+  void createTestScores() {
+    scores.add(new LeaderboardScore(1, 9000, "x"));
+    scores.add(new LeaderboardScore(2, 8000, "x"));
+    scores.add(new LeaderboardScore(3, 7000, "x"));
+    scores.add(new LeaderboardScore(4, 6000, "x"));
+    scores.add(new LeaderboardScore(5, 5000, "x"));
   }
 }
 

@@ -15,8 +15,8 @@ class Game {
     startScreen = new StartScreen(this, backgrnd);
     gameScreen = new GameScreen(this, backgrnd);
     endScreen = new EndScreen(this, backgrnd);
-    activeScreen = startScreen;
-    // activeScreen = endScreen;
+    // activeScreen = startScreen;
+    activeScreen = endScreen;
   }
   
   public void display() {
