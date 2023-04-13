@@ -12,12 +12,6 @@ void setup() {
 void draw() {
   game.display();
   audio.playSong();
-  if(game.inGame()){
-    audio.stopMenuSong();
-  }
-  else{
-    audio.stopGameSong();
-  }
 }
 
 void mousePressed() {
