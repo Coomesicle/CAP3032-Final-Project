@@ -66,27 +66,7 @@ class StartScreen extends Screen {
 
     buttons.get(buttons.size() - 1).display = () -> {
       drawHardButton(buttons.get(2));
-    };
-
-    // buttons.add(new Button(
-    //   2 * width / 4,
-    //   3 * height / 4,
-    //   2 * width / 4 + 180,
-    //   3 * height / 4 + 50,
-    //   true,
-    //   () -> {game.startGame(2);},
-    //   () -> {rect(0, 0, width / 2, height / 2)};
-    // ));
-
-    // buttons.add(new Button(
-    //   3 * width / 4,
-    //   3 * height / 4,
-    //   3 * width / 4 + 120,
-    //   3 * height / 4 + 50,
-    //   true,
-    //   () -> {game.startGame(2);},
-    //   () -> {rect(0, 0, width / 2, height / 2)};
-    // ));    
+    }; 
   }
 
   @Override
@@ -100,13 +80,7 @@ class StartScreen extends Screen {
     textfunc( 40, height / 2, 128, #FF0303 , "RhYthm");
     textfunc( 40, height / 2 + 110, 128, #FF0303 , "Run");
     
-    // textAlign(CENTER);
-    // textfunc( width/4, 3*height/4, 30, #05FF03 , "EASY");
-    // textfunc( 2*width/4, 3*height/4, 30, #FFA703 , "MEDIUM");
-    // textfunc( 3*width/4, 3*height/4, 30, #FF0303 , "HARD");
-    
-    //blur
-    filter(BLUR, 2); /////////////////////////////
+    filter(BLUR, 2);
     
     fill(0, 0, 0, 150);
     rectMode(CORNER);
@@ -117,12 +91,6 @@ class StartScreen extends Screen {
     textfunc( 40, height / 2 + 110, 128, 255 , "Run");
     textAlign(CENTER);
     
-    // filter(BLUR, 2); /////////////////////////////
-    
-    // textfunc( width/4, 3*height/4, 30, 255 , "EASY");
-    // textfunc( 2*width/4, 3*height/4, 30, 255 , "MEDIUM");
-    // textfunc( 3*width/4, 3*height/4, 30, 255 , "HARD");
-
     for (Button button : buttons)
       button.display.run();    
   }

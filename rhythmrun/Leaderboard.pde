@@ -11,9 +11,3 @@ class LeaderboardScore {
     this.dateTime = dateTime;
   }
 }
-
-class Leaderboard {
-  /*
-  
-  */
-}

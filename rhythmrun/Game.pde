@@ -1,9 +1,11 @@
 import java.io.*;
 import java.util.Scanner;
 import java.time.LocalDateTime;
+import java.time.format.FormatStyle;
+import java.time.format.DateTimeFormatter;
 
 class Game {
-  Integer score = 1000;
+  Integer score = 0;
   Integer difficulty = 2;
   PImage backgrnd;
   SoundFile song;
@@ -22,9 +24,6 @@ class Game {
     endScreen = new EndScreen(this, backgrnd);
     activeScreen = startScreen;
     highScores = new ArrayList<>();
-    // TODO: DELETE THIS LATER
-    endGame();
-    // activeScreen = endScreen;
   }
   
   public void display() {
@@ -62,38 +61,39 @@ class Game {
     ArrayList<LeaderboardScore> scores = new ArrayList<>();
 
     try {
-      File file = new File("highScores.txt");
-      Scanner scanner = new Scanner(file);
+      BufferedReader reader = createReader("highScores.txt");
+      String line = "";
 
-      if (!scanner.hasNextLine())
-        println("This whole thing won't read!");
-
-      while (scanner.hasNextLine()) {
+      while ((line = reader.readLine()) != null) {
         println("## Running");
         Integer rank = 0;
         Integer currScore = 0;
         String dateTime = "";
 
-        rank = Integer.parseInt(scanner.nextLine());
+        rank = Integer.parseInt(line);
 
-        if (scanner.hasNextLine())
-          currScore = Integer.parseInt(scanner.nextLine());
+        if ((line = reader.readLine()) != null)
+          currScore = Integer.parseInt(line);
         else break;
 
-        if (scanner.hasNextLine())
-          dateTime = scanner.nextLine();
+        if ((line = reader.readLine()) != null)
+          dateTime = line;
         else break;
 
         scores.add(new LeaderboardScore(rank, currScore, dateTime));
       }
-
-      // scanner.close();
   
     } catch (Exception e) {
       e.printStackTrace();
     }
 
     return scores;
+  }
+
+  String formattedCurrentTime() {
+    LocalDateTime currTime = LocalDateTime.now();
+    DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM, FormatStyle.SHORT);
+    return currTime.format(formatter);
   }
 
   ArrayList<LeaderboardScore> updateHighScores(ArrayList<LeaderboardScore> scores, Integer score) {
@@ -113,22 +113,28 @@ class Game {
       newScores.add(i, new LeaderboardScore(
         i + 1,
         score,
-        LocalDateTime.now().toString()
+        formattedCurrentTime()
       ));
     }
 
+    while (newScores.size() > 5)
+      newScores.remove(newScores.size() - 1);
     return newScores;
   }
 
   void writeHighScores(ArrayList<LeaderboardScore> scores) {
     try {
-      PrintWriter writer = new PrintWriter(new FileWriter("highScores.txt"));
+      PrintWriter writer = createWriter("data/highScores.txt");
+
       for (int i = 0; i < Math.min(5, scores.size()); i++) {
-        writer.print(scores.get(i).rank);
-        writer.print(scores.get(i).score);
-        writer.print(scores.get(i).dateTime);
+        writer.println(scores.get(i).rank);
+        writer.println(scores.get(i).score);
+        writer.println(scores.get(i).dateTime);
       }
-      // writer.close();
+
+      writer.flush();
+      writer.close();
+
     } catch (Exception e) {
       e.printStackTrace();
     }
