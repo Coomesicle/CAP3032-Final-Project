@@ -28,6 +28,7 @@ class Game {
   
   public void display() {
     activeScreen.display();
+    audio.playSong();
   }
   
   public void handleClick(float x, float y) {
@@ -38,6 +39,7 @@ class Game {
     println("Starting game! " + difficulty);
     this.difficulty = difficulty;
     activeScreen = gameScreen;
+    audio.stopMenuSong();
   }
 
   void resetGame() {
