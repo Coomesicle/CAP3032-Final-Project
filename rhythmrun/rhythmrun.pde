@@ -11,7 +11,7 @@ void setup() {
 
 void draw() {
   game.display();
-  audio.restartMenuSong();
+  audio.playSong();
 }
 
 void mousePressed() {

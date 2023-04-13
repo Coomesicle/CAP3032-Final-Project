@@ -4,34 +4,37 @@ class Audio {
   private SoundFile gameSong;
   private SoundFile menuSong;
   private BeatDetector beat;
+  Boolean menuSongPlaying = true;
+  Boolean gameSongPlaying = false;
   
   public Audio(PApplet parent) {
     gameSong = new SoundFile(parent, "assets/music/GameSong.wav");
     menuSong = new SoundFile(parent, "assets/music/MenuSong.wav");
-    menuSong.play();
     beat = new BeatDetector(parent);
     beat.input(gameSong);
   }
   
-  public void playGameSong(){
-    if(!gameSong.isPlaying()){
-      gameSong.play();
-    }
-  }
-  public void restartMenuSong(){
-    if(!menuSong.isPlaying()){
+  public void playSong(){
+    if(menuSongPlaying && !menuSong.isPlaying()){
       menuSong.play();
+      gameSong.stop();
+    }
+    else if(gameSongPlaying && !gameSong.isPlaying()){
+      gameSong.play();
+      menuSong.stop();
     }
   }
   
-  public void pauseGameSong(){
-    gameSong.pause();
+  public void stopMenuSong() {
+    menuSongPlaying = false;
+    gameSongPlaying = true;
   }
   
-  public void restartGameSong(){
-    gameSong.jump(0);
-    gameSong.stop();
+  public void stopGameSong(){
+    gameSongPlaying = false;
+    menuSongPlaying = true;
   }
+
   
   public boolean isBeat(){
     return beat.isBeat();

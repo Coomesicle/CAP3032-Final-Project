@@ -34,11 +34,14 @@ class Game {
     activeScreen.handleClick(x, y);
   }
   
+  
   void startGame(Integer difficulty) {
     println("Starting game! " + difficulty);
     this.difficulty = difficulty;
     activeScreen = gameScreen;
-  }
+    audio.stopMenuSong();
+    
+  }  
 
   void resetGame() {
     score = 0;
@@ -50,6 +53,7 @@ class Game {
     println(highScores);
     writeHighScores(highScores);
     activeScreen = endScreen;
+    audio.stopGameSong();
   }
   
   void returnToStart() {
@@ -82,6 +86,7 @@ class Game {
 
         scores.add(new LeaderboardScore(rank, currScore, dateTime));
       }
+
   
     } catch (Exception e) {
       e.printStackTrace();
