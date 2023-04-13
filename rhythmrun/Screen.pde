@@ -182,12 +182,12 @@ class GameScreen extends Screen {
 }
 
 class EndScreen extends Screen {
-  ArrayList<LeaderboardScore> scores;
+  // ArrayList<LeaderboardScore> scores;
   
   public EndScreen(Game game, PImage backgrnd) {
     super(game, backgrnd);
-    scores = new ArrayList<>();
-    createTestScores();
+    // scores = new ArrayList<>();
+    // createTestScores();
     
     buttons.add(new Button(
       width / 2,
@@ -239,11 +239,11 @@ class EndScreen extends Screen {
     fill(#FFFFFF);
     rect(100, 310, width - 200, 2);
     
-    for (int i = 0; i < scores.size(); i++) {
+    for (int i = 0; i < game.highScores.size(); i++) {
       Integer yPos = 350 + i * 50;
-      textfunc(100, yPos, 30, #FFFFFF, scores.get(i).rank.toString());
-      textfunc(250, yPos, 30, #FFFFFF, scores.get(i).score.toString());
-      textfunc(500, yPos, 30, #FFFFFF, scores.get(i).dateTime);
+      textfunc(100, yPos, 30, #FFFFFF, game.highScores.get(i).rank.toString());
+      textfunc(250, yPos, 30, #FFFFFF, game.highScores.get(i).score.toString());
+      textfunc(500, yPos, 30, #FFFFFF, game.highScores.get(i).dateTime);
     }
   }
   
@@ -261,13 +261,13 @@ class EndScreen extends Screen {
     textfunc(btn.x, btn.y - 5, 30, #FFFFFF , "Return to Menu");
   }
   
-  void createTestScores() {
-    scores.add(new LeaderboardScore(1, 9000, "x"));
-    scores.add(new LeaderboardScore(2, 8000, "x"));
-    scores.add(new LeaderboardScore(3, 7000, "x"));
-    scores.add(new LeaderboardScore(4, 6000, "x"));
-    scores.add(new LeaderboardScore(5, 5000, "x"));
-  }
+  // void createTestScores() {
+  //   scores.add(new LeaderboardScore(1, 9000, "x"));
+  //   scores.add(new LeaderboardScore(2, 8000, "x"));
+  //   scores.add(new LeaderboardScore(3, 7000, "x"));
+  //   scores.add(new LeaderboardScore(4, 6000, "x"));
+  //   scores.add(new LeaderboardScore(5, 5000, "x"));
+  // }
 }
 
 void textfunc(float x, float y, int txtSize, int fillCol , String str){
