@@ -50,6 +50,7 @@ class Game {
     println(highScores);
     writeHighScores(highScores);
     activeScreen = endScreen;
+    audio.stopGameSong();
   }
   
   void returnToStart() {
@@ -82,6 +83,7 @@ class Game {
 
         scores.add(new LeaderboardScore(rank, currScore, dateTime));
       }
+
   
     } catch (Exception e) {
       e.printStackTrace();
