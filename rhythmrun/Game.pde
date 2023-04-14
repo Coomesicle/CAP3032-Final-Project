@@ -16,8 +16,10 @@ class Game {
   GameScreen gameScreen;
   EndScreen endScreen;
   Screen activeScreen;
+  ArrayList<Button> startScreenButtons;
+  ArrayList<Button> gameScreenButtons;
   
-  public Game() {
+  public Game(PApplet p) {
     backgrnd = loadImage("assets/images/spacefractal1000x726.jpg");
     startScreen = new StartScreen(this, backgrnd);
     gameScreen = new GameScreen(this, backgrnd);
@@ -29,6 +31,17 @@ class Game {
   public void display() {
     activeScreen.display();
     audio.playSong();
+    startScreenButtons = new ArrayList<>();
+    gameScreenButtons = new ArrayList<>();
+    
+    /*
+    This is how you would add a button to the screen.
+    this::testButton is an onClick function.
+    
+    startScreenButtons.add(new Button(
+      0, 0, width, height, this::testButton
+    ));
+    */
   }
   
   public void handleClick(float x, float y) {
@@ -48,7 +61,6 @@ class Game {
     difficulty = 2;
   }
   public int getScore(){return score;}
-  
   void endGame() {
     highScores = updateHighScores(loadHighScores(), score);
     println(highScores);
@@ -134,6 +146,8 @@ class Game {
       newScores.remove(newScores.size() - 1);
     return newScores;
   }
+  
+    
 
   void writeHighScores(ArrayList<LeaderboardScore> scores) {
     try {

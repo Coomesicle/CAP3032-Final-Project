@@ -5,8 +5,8 @@ Audio audio;
 
 void setup() {
   size(1000, 726);
-  game = new Game();
   audio = new Audio(this);
+  game = new Game(this);
 }
 
 void draw() {

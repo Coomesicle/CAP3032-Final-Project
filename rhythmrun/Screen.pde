@@ -140,14 +140,30 @@ class StartScreen extends Screen {
 
 class GameScreen extends Screen {
   boolean red,blue,yellow,green;
+  int rx,ry;
+  int bx,by;
+  int yx,yy;
+  int gx,gy;
   int Score = game.getScore();
+  
   public GameScreen(Game game, PImage backgrnd) {
     super(game, backgrnd);
   }
 
   @Override
   public void display() {
-    super.display();
+    background(backgrnd);
+    stroke(255);
+    strokeWeight(3);
+    line(200,50, 800,50);
+    line(200,50, 200,650);
+    line(800,50, 800,650);
+    line(200,650, 800,650);
+    drawColorLine(200,55, 200,645, color(255,255,0));
+    drawColorLine(800,55, 800,645, color(0,0,255));
+    drawColorLine(200,50, 800,50, color(255,0,0));
+    drawColorLine(200,650, 800,650, color(0,255,0));
+    
     displayScore();
     game.beatDisplay();
     if(yellow){displayYellow();}
@@ -164,37 +180,73 @@ class GameScreen extends Screen {
   public void addObject(){
     int randColor = (int) random(0,5);
     //Might need to check if object is already true
-    if(randColor==1){
+    if(randColor==1 && !red){
+      rx=width/2;
+      ry=height/2;
       red=true;
     }
-    if(randColor==2){
+    if(randColor==2 && !blue){
+      bx=width/2;
+      by=height/2;
       blue=true;
     }
-    if(randColor==3){
+    if(randColor==3 && !green){
+      gx=width/2;
+      gy=height/2;
       green=true;
     }
-    if(randColor==4){
+    if(randColor==4 && !yellow){
+      yx=width/2;
+      yy=height/2;
       yellow=true;
     }
   }
     
   void displayYellow(){
-    fill(#F5FA00);
-    circle(100,100,100);
   }
   void displayGreen(){
-    fill(0,255,0);
-    circle(100,40,100);
   }
   void displayBlue(){
     fill(0,0,255);
     circle(40,100,100);
   }
   void displayRed(){
-    fill(255,0,0);
-    circle(40,40,100);
+    line(yx-200,yy, yx+200,yy);
+    drawColorLine(yx-205,50, yx+195,50, color(255,0,0));
   }
   
+  void drawColorLine(int x1, int y1, int x2, int y2, color c) {
+    stroke(c, 100);
+    strokeWeight(10);
+    line(x1,y1,x2,y2);
+  }
+  
+  void keyPressed(){
+    if(key=='w' || key=='W'){
+      //Red
+      red=false;
+      int points = 0;
+      game.updateScore(points);
+    }
+    if(key=='a' || key=='A'){
+      //Yellow
+      yellow=false;
+      int points = 0;
+      game.updateScore(points);
+    }
+    if(key=='s' || key=='S'){
+      //Green
+      green=false;
+      int points = 0;
+      game.updateScore(points);
+    }
+    if(key=='d' || key=='D'){
+      //Blue
+      blue=false;
+      int points = 0;
+      game.updateScore(points);
+    }
+  }
 }
 
 class EndScreen extends Screen {
