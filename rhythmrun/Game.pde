@@ -47,6 +47,7 @@ class Game {
     score = 0;
     difficulty = 2;
   }
+  public int getScore(){return score;}
   
   void endGame() {
     highScores = updateHighScores(loadHighScores(), score);

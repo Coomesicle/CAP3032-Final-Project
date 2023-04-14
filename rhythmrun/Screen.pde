@@ -140,6 +140,7 @@ class StartScreen extends Screen {
 
 class GameScreen extends Screen {
   boolean red,blue,yellow,green;
+  int Score = game.getScore();
   public GameScreen(Game game, PImage backgrnd) {
     super(game, backgrnd);
   }
@@ -147,11 +148,17 @@ class GameScreen extends Screen {
   @Override
   public void display() {
     super.display();
+    displayScore();
     game.beatDisplay();
     if(yellow){displayYellow();}
     if(green){displayGreen();}
     if(red){displayRed();}
     if(blue){displayBlue();}
+  }
+  void displayScore(){
+    fill(0);
+    textSize(40);
+    text(("Score: "+ Score),900,20);
   }
   
   public void addObject(){
