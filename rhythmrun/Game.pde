@@ -39,6 +39,7 @@ class Game {
     println("Starting game! " + difficulty);
     this.difficulty = difficulty;
     activeScreen = gameScreen;
+    audio.setDifficulty(difficulty);
     audio.stopMenuSong();
   }
 
@@ -46,6 +47,16 @@ class Game {
     score = 0;
     difficulty = 2;
   }
+  public void updateScore(int Key){
+    int points = 0;
+    if(Key == 1){points = gameScreen.redClicked();}
+    if(Key == 2){points = gameScreen.blueClicked();}
+    if(Key == 3){points = gameScreen.greenClicked();}
+    if(Key == 4){points = gameScreen.yellowClicked();}
+    score += points;
+  }
+  public int getScore(){return score;}
+  public int getDifficulty(){return difficulty;}
   
   void endGame() {
     highScores = updateHighScores(loadHighScores(), score);
@@ -100,6 +111,12 @@ class Game {
     return currTime.format(formatter);
   }
 
+  void beatDisplay(){
+    if(audio.isBeat()){
+      gameScreen.addObject();
+    }
+  }
+  
   ArrayList<LeaderboardScore> updateHighScores(ArrayList<LeaderboardScore> scores, Integer score) {
     boolean newHighScore = false;
     ArrayList<LeaderboardScore> newScores = scores;
