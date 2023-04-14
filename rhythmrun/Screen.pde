@@ -139,6 +139,7 @@ class StartScreen extends Screen {
 }
 
 class GameScreen extends Screen {
+  boolean red,blue,yellow,green;
   public GameScreen(Game game, PImage backgrnd) {
     super(game, backgrnd);
   }
@@ -146,7 +147,47 @@ class GameScreen extends Screen {
   @Override
   public void display() {
     super.display();
+    game.beatDisplay();
+    if(yellow){displayYellow();}
+    if(green){displayGreen();}
+    if(red){displayRed();}
+    if(blue){displayBlue();}
   }
+  
+  public void addObject(){
+    int randColor = (int) random(0,5);
+    //Might need to check if object is already true
+    if(randColor==1){
+      red=true;
+    }
+    if(randColor==2){
+      blue=true;
+    }
+    if(randColor==3){
+      green=true;
+    }
+    if(randColor==4){
+      yellow=true;
+    }
+  }
+    
+  void displayYellow(){
+    fill(#F5FA00);
+    circle(100,100,100);
+  }
+  void displayGreen(){
+    fill(0,255,0);
+    circle(100,40,100);
+  }
+  void displayBlue(){
+    fill(0,0,255);
+    circle(40,100,100);
+  }
+  void displayRed(){
+    fill(255,0,0);
+    circle(40,40,100);
+  }
+  
 }
 
 class EndScreen extends Screen {

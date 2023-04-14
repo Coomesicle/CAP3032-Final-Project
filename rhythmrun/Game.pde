@@ -39,6 +39,7 @@ class Game {
     println("Starting game! " + difficulty);
     this.difficulty = difficulty;
     activeScreen = gameScreen;
+    audio.setDifficulty(difficulty);
     audio.stopMenuSong();
   }
 
@@ -99,6 +100,13 @@ class Game {
     DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM, FormatStyle.SHORT);
     return currTime.format(formatter);
   }
+  
+  void beatDisplay(){
+    if(audio.isBeat()){
+      gameScreen.addObject();
+    }
+  }
+      
 
   ArrayList<LeaderboardScore> updateHighScores(ArrayList<LeaderboardScore> scores, Integer score) {
     boolean newHighScore = false;
