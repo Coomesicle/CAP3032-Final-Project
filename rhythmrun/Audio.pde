@@ -34,7 +34,7 @@ class Audio {
     gameSongPlaying = false;
     menuSongPlaying = true;
   }
-  
+
   public void setDifficulty(int difficulty){
     beat.sensitivity(1500/difficulty);
   }

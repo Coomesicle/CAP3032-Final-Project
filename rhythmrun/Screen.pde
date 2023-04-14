@@ -139,11 +139,22 @@ class StartScreen extends Screen {
 }
 
 class GameScreen extends Screen {
+  
+  int sx = 2 * game.getDifficulty();
+  int sy = 2 * game.getDifficulty();
+  int redX1 = 480;
+  int redX2 = 520;
+  int redY = 330;
+  int greenX1 = 480;
+  int greenX2 = 520;
+  int greenY = 370;
+  int blueX = 520;
+  int blueY1 = 330;
+  int blueY2 = 370;
+  int yellowX = 480;
+  int yellowY1 = 330;
+  int yellowY2 = 370;
   boolean red,blue,yellow,green;
-  int rx,ry;
-  int bx,by;
-  int yx,yy;
-  int gx,gy;
   int Score = game.getScore();
   
   public GameScreen(Game game, PImage backgrnd) {
@@ -152,7 +163,9 @@ class GameScreen extends Screen {
 
   @Override
   public void display() {
-    background(backgrnd);
+    super.display();
+    displayScore();
+    game.beatDisplay();
     stroke(255);
     strokeWeight(3);
     line(200,50, 800,50);
@@ -163,56 +176,10 @@ class GameScreen extends Screen {
     drawColorLine(800,55, 800,645, color(0,0,255));
     drawColorLine(200,50, 800,50, color(255,0,0));
     drawColorLine(200,650, 800,650, color(0,255,0));
-    
-    displayScore();
-    game.beatDisplay();
     if(yellow){displayYellow();}
     if(green){displayGreen();}
     if(red){displayRed();}
     if(blue){displayBlue();}
-  }
-  void displayScore(){
-    fill(0);
-    textSize(40);
-    text(("Score: "+ Score),900,20);
-  }
-  
-  public void addObject(){
-    int randColor = (int) random(0,5);
-    //Might need to check if object is already true
-    if(randColor==1 && !red){
-      rx=width/2;
-      ry=height/2;
-      red=true;
-    }
-    if(randColor==2 && !blue){
-      bx=width/2;
-      by=height/2;
-      blue=true;
-    }
-    if(randColor==3 && !green){
-      gx=width/2;
-      gy=height/2;
-      green=true;
-    }
-    if(randColor==4 && !yellow){
-      yx=width/2;
-      yy=height/2;
-      yellow=true;
-    }
-  }
-    
-  void displayYellow(){
-  }
-  void displayGreen(){
-  }
-  void displayBlue(){
-    fill(0,0,255);
-    circle(40,100,100);
-  }
-  void displayRed(){
-    line(yx-200,yy, yx+200,yy);
-    drawColorLine(yx-205,50, yx+195,50, color(255,0,0));
   }
   
   void drawColorLine(int x1, int y1, int x2, int y2, color c) {
@@ -221,31 +188,104 @@ class GameScreen extends Screen {
     line(x1,y1,x2,y2);
   }
   
-  void keyPressed(){
-    if(key=='w' || key=='W'){
-      //Red
-      red=false;
-      int points = 0;
-      game.updateScore(points);
+  void displayScore(){
+    fill(0);
+    textSize(40);
+    text(("Score: "+ Score),900,20);
+  }
+
+  public void addObject(){
+    int randColor = (int) random(0,5);
+    //Might need to check if object is already true
+    if(randColor==1){
+      red=true;
     }
-    if(key=='a' || key=='A'){
-      //Yellow
-      yellow=false;
-      int points = 0;
-      game.updateScore(points);
+    if(randColor==2){
+      blue=true;
     }
-    if(key=='s' || key=='S'){
-      //Green
-      green=false;
-      int points = 0;
-      game.updateScore(points);
+    if(randColor==3){
+      green=true;
     }
-    if(key=='d' || key=='D'){
-      //Blue
-      blue=false;
-      int points = 0;
-      game.updateScore(points);
+    if(randColor==4){
+      yellow=true;
     }
+  }
+
+  void displayYellow(){
+    drawColorLine(yellowX,yellowY1, yellowX,yellowY2, color(255,255,0));
+    yellowX -= sx;
+    yellowY1 -= sy;
+    yellowY2 += sy;
+    if(yellowX < 200) {
+      yellowX = 480;
+      yellowY1 = 330;
+      yellowY2 = 370;
+      yellow = false;
+    }
+  }
+  void displayGreen(){
+    drawColorLine(greenX1,greenY, greenX2, greenY, color(0,255,0));
+    greenX1 -= sx;
+    greenX2 += sx;
+    greenY += sy;
+    if(greenY > 650) {
+      greenX1 = 480;
+      greenX2 = 520;
+      greenY = 370;
+      green = false;
+    }
+  }
+  void displayBlue(){
+    drawColorLine(blueX,blueY1, blueX,blueY2, color(0,0,255));
+    blueX += sx;
+    blueY1 -= sy;
+    blueY2 += sy;
+    if(blueX > 800) {
+      blueX = 520;
+      blueY1 = 330;
+      blueY2 = 370;
+      blue = false;
+    }
+  }
+  void displayRed(){
+    drawColorLine(redX1,redY, redX2,redY, color(255,0,0));
+    redX1 -= sx;
+    redX2 += sx;
+    redY -= sy;
+    if(redY < 50) {
+      redX1 = 480;
+      redX2 = 520;
+      redY = 330;
+      red = false;
+    }
+  }
+  public int yellowClicked(){
+    yellow = false;
+    yellowX = 480;
+    yellowY1 = 330;
+    yellowY2 = 370;
+    return redY-200;
+  }
+  public int greenClicked(){
+    green = false;
+    greenX1 = 480;
+    greenX2 = 520;
+    greenY = 370;
+    return 800-greenY;
+  }
+  public int blueClicked(){
+    blue = false;
+    blueX = 520;
+    blueY1 = 330;
+    blueY2 = 370;
+    return 800-blueX;
+  }
+  public int redClicked(){
+    red = false;
+    redX1 = 480;
+    redX2 = 520;
+    redY = 330;
+    return yellowX-200;
   }
 }
 

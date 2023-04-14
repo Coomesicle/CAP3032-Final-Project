@@ -16,10 +16,8 @@ class Game {
   GameScreen gameScreen;
   EndScreen endScreen;
   Screen activeScreen;
-  ArrayList<Button> startScreenButtons;
-  ArrayList<Button> gameScreenButtons;
   
-  public Game(PApplet p) {
+  public Game() {
     backgrnd = loadImage("assets/images/spacefractal1000x726.jpg");
     startScreen = new StartScreen(this, backgrnd);
     gameScreen = new GameScreen(this, backgrnd);
@@ -31,17 +29,6 @@ class Game {
   public void display() {
     activeScreen.display();
     audio.playSong();
-    startScreenButtons = new ArrayList<>();
-    gameScreenButtons = new ArrayList<>();
-    
-    /*
-    This is how you would add a button to the screen.
-    this::testButton is an onClick function.
-    
-    startScreenButtons.add(new Button(
-      0, 0, width, height, this::testButton
-    ));
-    */
   }
   
   public void handleClick(float x, float y) {
@@ -60,7 +47,18 @@ class Game {
     score = 0;
     difficulty = 2;
   }
+  public void updateScore(int Key){
+    int points = 0;
+    if(Key == 1){points = gameScreen.redClicked();}
+    if(Key == 2){points = gameScreen.blueClicked();}
+    if(Key == 3){points = gameScreen.greenClicked();}
+    if(Key == 4){points = gameScreen.yellowClicked();}
+    score += points;
+  }
   public int getScore(){return score;}
+  
+  public int getDifficulty(){return difficulty;}
+  
   void endGame() {
     highScores = updateHighScores(loadHighScores(), score);
     println(highScores);
@@ -113,14 +111,13 @@ class Game {
     DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM, FormatStyle.SHORT);
     return currTime.format(formatter);
   }
-  
+
   void beatDisplay(){
     if(audio.isBeat()){
       gameScreen.addObject();
     }
   }
-      
-
+  
   ArrayList<LeaderboardScore> updateHighScores(ArrayList<LeaderboardScore> scores, Integer score) {
     boolean newHighScore = false;
     ArrayList<LeaderboardScore> newScores = scores;
@@ -146,8 +143,6 @@ class Game {
       newScores.remove(newScores.size() - 1);
     return newScores;
   }
-  
-    
 
   void writeHighScores(ArrayList<LeaderboardScore> scores) {
     try {
