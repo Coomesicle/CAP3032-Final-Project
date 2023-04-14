@@ -155,7 +155,6 @@ class GameScreen extends Screen {
   int yellowY1 = 330;
   int yellowY2 = 370;
   boolean red,blue,yellow,green;
-  int Score = game.getScore();
   
   public GameScreen(Game game, PImage backgrnd) {
     super(game, backgrnd);
@@ -191,7 +190,8 @@ class GameScreen extends Screen {
   void displayScore(){
     fill(0);
     textSize(40);
-    text(("Score: "+ Score),900,20);
+    int Score = game.getScore();
+    text(("Score: "+ Score),850,20);
   }
 
   public void addObject(){
