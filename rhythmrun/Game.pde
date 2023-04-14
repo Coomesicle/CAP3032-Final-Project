@@ -56,7 +56,6 @@ class Game {
     score += points;
   }
   public int getScore(){return score;}
-  
   public int getDifficulty(){return difficulty;}
   
   void endGame() {

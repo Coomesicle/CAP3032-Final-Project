@@ -1,3 +1,5 @@
 *.autosave
 *.vscode
 out
+
+\rhythmrun\data\highScores.txt"
