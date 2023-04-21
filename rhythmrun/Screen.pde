@@ -261,12 +261,12 @@ class GameScreen extends Screen {
   }
   public int yellowClicked(){
     int points = 0;
-    if(yellowX - 200 < 50) {
+    if(yellowX - 200 < 75) {
       if(yellowX - 200 == 0) {
         points = 150;
       }
       else {
-        points = (int)((1/ (float)(yellowX-200)) * 100);
+        points = (int)((1/ (float)(yellowX-200)) * 125);
       }
     }
     yellow = false;
@@ -277,12 +277,12 @@ class GameScreen extends Screen {
   }
   public int greenClicked(){
     int points = 0;
-    if(650 - greenY < 50) {
+    if(650 - greenY < 75) {
       if(650 - greenY == 0) {
         points = 150;
       }
       else {
-        points = (int) ((1/ (float)(650 - greenY)) * 100);
+        points = (int) ((1/ (float)(650 - greenY)) * 125);
       }
     }
     green = false;
@@ -293,12 +293,12 @@ class GameScreen extends Screen {
   }
   public int blueClicked(){
     int points = 0;
-    if(800 - blueX < 50) {
+    if(800 - blueX < 75) {
       if(800 - blueX == 0) {
         points = 150;
       }
       else {
-        points = (int) ((1/ (float)(800-blueX)) * 100);
+        points = (int) ((1/ (float)(800-blueX)) * 125);
       }
     }
     blue = false;
@@ -309,12 +309,12 @@ class GameScreen extends Screen {
   }
   public int redClicked(){
     int points = 0;
-    if(redY - 50 < 50) {
-      if(redY - 50 == 0) {
+    if(redY - 75 < 75) {
+      if(redY == 50) {
         points = 150;
       }
       else {
-        points = (int)((1/ (float)(redY-50)) * 100);
+        points = (int)((1/ (float)(redY-75)) * 125);
       }
     }
     red = false;
