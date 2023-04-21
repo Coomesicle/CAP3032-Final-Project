@@ -63,11 +63,11 @@ class Game {
     println(highScores);
     writeHighScores(highScores);
     activeScreen = endScreen;
-    audio.stopGameSong();
   }
   
   void returnToStart() {
     activeScreen = startScreen;
+    audio.stopGameSong();
     resetGame();
   }
 
