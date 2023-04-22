@@ -13,9 +13,12 @@ void draw() {
   game.display();
 }
 
+// grabs the location of where the mouse was clicked
 void mousePressed() {
   game.handleClick(mouseX, mouseY);
 }
+
+// detects which key was pressed and looks at the color corresponding to that key
 void keyPressed(){
     if(key=='w' || key=='W' || keyCode==UP){
       //Red
