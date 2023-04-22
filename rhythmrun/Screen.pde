@@ -1,31 +1,32 @@
+// handles the aspects of each specific screen
 class Screen {
   Game game;
   ArrayList<Button> buttons;
   PImage backgrnd;
-
+  // constructor
   public Screen(Game game, PImage backgrnd) {
     this.backgrnd = backgrnd;
     this.game = game;
     buttons = new ArrayList<>();
   }
-
+  // checks the mouse click to see if it is over a button
   public void handleClick(float x, float y) {
     for (Button button : buttons)
       if (button.isOver(x, y))
         button.onClick.run();
   }
-
+  // displays the background
   public void display() {
     background(backgrnd);
   }
   
 }
 
+// start screen
 class StartScreen extends Screen {
-
+  // constructor which adds all the buttons of the start screen
   public StartScreen(Game game, PImage backgrnd) {
     super(game, backgrnd);
-
     buttons.add(new Button(
       (float) (5 * width / 6),
       (float) (3 * height / 8),
@@ -68,7 +69,8 @@ class StartScreen extends Screen {
       drawHardButton(buttons.get(2));
     }; 
   }
-
+ 
+  // displays the start screen with the buttons and text
   @Override
   public void display() {
     background(backgrnd);
@@ -95,6 +97,7 @@ class StartScreen extends Screen {
       button.display.run();    
   }
 
+  // draws the easy button
   void drawEasyButton(Button btn) {
     rectMode(btn.centered ? CENTER : CORNER);
     
@@ -108,7 +111,8 @@ class StartScreen extends Screen {
     textAlign(CENTER, CENTER);
     textfunc(btn.x, btn.y - 5, 30, #02FF02, "EASY");
   }
-
+  
+  // draws the medium difficulty button
   void drawMediumButton(Button btn) {
     rectMode(btn.centered ? CENTER : CORNER);
     
@@ -123,6 +127,7 @@ class StartScreen extends Screen {
     textfunc(btn.x, btn.y - 5, 30, #FFB703 , "MEDIUM");
   }
 
+  // draws the hard difficulty button
   void drawHardButton(Button btn) {
     rectMode(btn.centered ? CENTER : CORNER);
     
@@ -138,6 +143,7 @@ class StartScreen extends Screen {
   }
 }
 
+// game screen
 class GameScreen extends Screen {
   
   int sx = 2 * game.getDifficulty();
@@ -156,10 +162,12 @@ class GameScreen extends Screen {
   int yellowY2 = 370;
   boolean red,blue,yellow,green;
   
+  //constructor
   public GameScreen(Game game, PImage backgrnd) {
     super(game, backgrnd);
   }
-
+  
+  // displays the square, current score and the lines of the game screen
   @Override
   public void display() {
     super.display();
@@ -181,12 +189,14 @@ class GameScreen extends Screen {
     if(blue){displayBlue();}
   }
   
+  // draws the color lines of the square
   void drawColorLine(int x1, int y1, int x2, int y2, color c) {
     stroke(c, 100);
     strokeWeight(10);
     line(x1,y1,x2,y2);
   }
   
+  // displays the current score in the top right
   void displayScore(){
     fill(0);
     textSize(40);
@@ -194,6 +204,7 @@ class GameScreen extends Screen {
     text(("Score: "+ Score),850,20);
   }
 
+  // adds a random colored line to the screen which will start moving after
   public void addObject(){
     int randColor = (int) random(0,5);
     //Might need to check if object is already true
@@ -210,7 +221,8 @@ class GameScreen extends Screen {
       yellow=true;
     }
   }
-
+  
+  // displays the moving yellow line
   void displayYellow(){
     drawColorLine(yellowX,yellowY1, yellowX,yellowY2, color(255,255,0));
     yellowX -= sx;
@@ -223,6 +235,7 @@ class GameScreen extends Screen {
       yellow = false;
     }
   }
+  // displays the moving green line
   void displayGreen(){
     drawColorLine(greenX1,greenY, greenX2, greenY, color(0,255,0));
     greenX1 -= sx;
@@ -235,6 +248,7 @@ class GameScreen extends Screen {
       green = false;
     }
   }
+  // displays the moving blue line
   void displayBlue(){
     drawColorLine(blueX,blueY1, blueX,blueY2, color(0,0,255));
     blueX += sx;
@@ -247,6 +261,7 @@ class GameScreen extends Screen {
       blue = false;
     }
   }
+  // displays the moving red line
   void displayRed(){
     drawColorLine(redX1,redY, redX2,redY, color(255,0,0));
     redX1 -= sx;
@@ -259,6 +274,7 @@ class GameScreen extends Screen {
       red = false;
     }
   }
+  // checks at what point was yellow clicked and calculates the points given based on the location
   public int yellowClicked(){
     int points = 0;
     if(yellowX - 200 < 75) {
@@ -275,6 +291,7 @@ class GameScreen extends Screen {
     yellowY2 = 370;
     return points;
   }
+  // checks at what point was green clicked and calculates the points given based on the location
   public int greenClicked(){
     int points = 0;
     if(650 - greenY < 75) {
@@ -291,6 +308,7 @@ class GameScreen extends Screen {
     greenY = 370;
     return points;
   }
+  // checks at what point was blue clicked and calculates the points given based on the location
   public int blueClicked(){
     int points = 0;
     if(800 - blueX < 75) {
@@ -307,6 +325,7 @@ class GameScreen extends Screen {
     blueY2 = 370;
     return points;
   }
+  // checks at what point was reds clicked and calculates the points given based on the location
   public int redClicked(){
     int points = 0;
     if(redY - 75 < 75) {
@@ -325,9 +344,11 @@ class GameScreen extends Screen {
   }
 }
 
+// end screen
 class EndScreen extends Screen {
   // ArrayList<LeaderboardScore> scores;
   
+  // constructor which adds buttons
   public EndScreen(Game game, PImage backgrnd) {
     super(game, backgrnd);
     // scores = new ArrayList<>();
@@ -348,6 +369,7 @@ class EndScreen extends Screen {
     };
   }
 
+  // displays all the contents of the end screen
   @Override
   public void display() {
     super.display();
@@ -370,6 +392,7 @@ class EndScreen extends Screen {
       button.display.run();
   }
   
+  // draws the leaderboard on the end screen
   void drawLeaderboard() {
     fill(0, 0, 0, 150);
     rectMode(CORNER);
@@ -391,6 +414,7 @@ class EndScreen extends Screen {
     }
   }
   
+  // draws the return button on the end screen
   void drawReturnButton(Button btn) {
     rectMode(btn.centered ? CENTER : CORNER);
     
@@ -414,6 +438,7 @@ class EndScreen extends Screen {
   // }
 }
 
+// displays text at a specific x and y and with the color passed in
 void textfunc(float x, float y, int txtSize, int fillCol , String str){
   textSize(txtSize);
   fill(fillCol);

@@ -8,6 +8,7 @@ class Button {
   Runnable onClick;
   Runnable display;
 
+  // constructor for the button
   public Button(float x, float y, float width, float height, boolean centered, Runnable onClick, Runnable display) {
     this.x = x;
     this.y = y;
@@ -17,7 +18,7 @@ class Button {
     this.onClick = onClick;
     this.display = display;
   }
-
+  // checks if the user clicked a button
   public boolean isOver(float mx, float my) {
     if (centered)
       return (
