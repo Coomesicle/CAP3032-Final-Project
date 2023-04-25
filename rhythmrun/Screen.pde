@@ -328,12 +328,12 @@ class GameScreen extends Screen {
   // checks at what point was reds clicked and calculates the points given based on the location
   public int redClicked(){
     int points = 0;
-    if(redY - 75 < 75) {
+    if(redY - 50 < 75) {
       if(redY == 50) {
         points = 150;
       }
       else {
-        points = (int)((1/ (float)(redY-75)) * 125);
+        points = (int)((1/ (float)(redY-50)) * 125);
       }
     }
     red = false;
